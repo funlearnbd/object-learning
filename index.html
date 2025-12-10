@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="FunLearnBD - Learn English through fun games! Animals, birds, vehicles, and more!">
+    <meta name="theme-color" content="#FF6B6B">
+    
+    <title>FunLearnBD - Learning Game</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+    
+    <!-- Preload fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="screen active">
+        <div class="loading-content">
+            <div class="logo-animation">
+                <h1 class="game-logo">FunLearn<span>BD</span></h1>
+                <div class="loading-mascot">🦜</div>
+            </div>
+            <div class="loading-spinner"></div>
+            <p class="loading-text">Loading fun learning...</p>
+        </div>
+    </div>
+
+    <!-- Start Screen -->
+    <div id="startScreen" class="screen">
+        <div class="start-content">
+            <div class="mascot-welcome">
+                <div class="mascot-large">🦜</div>
+                <div class="speech-bubble">
+                    <p id="welcomeText">Welcome to FunLearnBD!</p>
+                </div>
+            </div>
+            
+            <h1 class="game-title">FunLearn<span>BD</span></h1>
+            <p class="game-subtitle" id="welcomeSubtitle">Let's learn English together!</p>
+            
+            <div class="language-selector">
+                <h2 id="selectLanguageText">Select Your Language</h2>
+                <div class="language-buttons">
+                    <button class="language-btn" data-lang="en">
+                        <span class="flag">🇬🇧</span>
+                        <span>English</span>
+                    </button>
+                    <button class="language-btn" data-lang="bn">
+                        <span class="flag">🇧🇩</span>
+                        <span>বাংলা</span>
+                    </button>
+                    <button class="language-btn" data-lang="ar">
+                        <span class="flag">🇸🇦</span>
+                        <span>العربية</span>
+                    </button>
+                </div>
+            </div>
+            
+            <button id="startButton" class="primary-btn large" disabled>
+                <span id="startButtonText">Let's Learn!</span>
+                <span class="btn-icon">🚀</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Category Selection Screen -->
+    <div id="categoryScreen" class="screen">
+        <header class="app-header">
+            <button class="icon-btn" id="settingsBtn">⚙️</button>
+            <h2 class="header-title">FunLearnBD</h2>
+            <div class="mascot-corner">🦜</div>
+        </header>
+        
+        <div class="screen-content">
+            <div class="mascot-speech">
+                <div class="mascot-avatar">🦜</div>
+                <div class="speech-bubble">
+                    <p id="categoryPrompt">What do you want to learn today?</p>
+                </div>
+            </div>
+            
+            <div class="category-grid" id="categoryGrid">
+                <!-- Categories will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Game Screen -->
+    <div id="gameScreen" class="screen">
+        <header class="app-header">
+            <button class="icon-btn" id="backToCategoriesBtn">←</button>
+            <h2 class="header-title" id="currentCategoryName">Category</h2>
+            <div class="score-display">
+                <span id="scoreValue">0</span> ⭐
+            </div>
+        </header>
+        
+        <!-- Tab Navigation -->
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="learn">
+                <span class="tab-icon">📚</span>
+                <span class="tab-label" id="tabLearn">Learn</span>
+            </button>
+            <button class="tab-btn" data-tab="play">
+                <span class="tab-icon">🎮</span>
+                <span class="tab-label" id="tabPlay">Play</span>
+            </button>
+            <button class="tab-btn" data-tab="progress">
+                <span class="tab-icon">📊</span>
+                <span class="tab-label" id="tabProgress">Progress</span>
+            </button>
+        </nav>
+        
+        <!-- Learn Tab -->
+        <div id="learnTab" class="tab-content active">
+            <div class="mascot-helper">
+                <div class="mascot-small">🦜</div>
+                <p id="learnInstructions">Tap any item to hear its name!</p>
+            </div>
+            
+            <div class="items-grid" id="learnItemsGrid">
+                <!-- Items will be populated here -->
+            </div>
+        </div>
+        
+        <!-- Play Tab -->
+        <div id="playTab" class="tab-content">
+            <div class="game-mode-selector" id="gameModeSelector">
+                <h3 id="playTitle">Choose a Game!</h3>
+                
+                <div class="game-modes">
+                    <button class="game-mode-card" data-mode="findIt">
+                        <div class="mode-icon">🔍</div>
+                        <h4 id="modeFindIt">Find It!</h4>
+                        <p>Find the correct picture</p>
+                    </button>
+                    
+                    <button class="game-mode-card" data-mode="listenMatch">
+                        <div class="mode-icon">👂</div>
+                        <h4 id="modeListenMatch">Listen & Match</h4>
+                        <p>Listen and tap the right one</p>
+                    </button>
+                    
+                    <button class="game-mode-card" data-mode="memoryMatch">
+                        <div class="mode-icon">🃏</div>
+                        <h4 id="modeMemoryMatch">Memory Match</h4>
+                        <p>Find matching pairs</p>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Game Area (hidden initially) -->
+            <div class="game-area" id="gameArea" style="display: none;">
+                <!-- Game content will be dynamically populated -->
+            </div>
+        </div>
+        
+        <!-- Progress Tab -->
+        <div id="progressTab" class="tab-content">
+            <div class="progress-content">
+                <div class="stats-card">
+                    <h3>Your Learning Stats</h3>
+                    <div class="stat-row">
+                        <span class="stat-label">Items Learned:</span>
+                        <span class="stat-value" id="itemsLearned">0</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Stars Earned:</span>
+                        <span class="stat-value" id="starsEarned">0 ⭐</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Games Played:</span>
+                        <span class="stat-value" id="gamesPlayed">0</span>
+                    </div>
+                </div>
+                
+                <div class="achievements-card">
+                    <h3>Achievements</h3>
+                    <div class="achievements-grid" id="achievementsGrid">
+                        <!-- Achievements will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mascot Overlay (for animations and speech) -->
+    <div id="mascotOverlay" class="mascot-overlay">
+        <div class="mascot-animated">🦜</div>
+        <div class="mascot-message"></div>
+    </div>
+
+    <!-- Celebration Overlay -->
+    <div id="celebrationOverlay" class="celebration-overlay">
+        <div class="confetti-container"></div>
+        <div class="celebration-content">
+            <div class="celebration-icon">🎉</div>
+            <h2 class="celebration-text">Excellent!</h2>
+        </div>
+    </div>
+
+    <!-- Audio Element (hidden) -->
+    <audio id="audioPlayer" preload="auto"></audio>
+
+    <!-- Scripts -->
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(reg => console.log('Service Worker registered'))
+                    .catch(err => console.log('Service Worker registration failed'));
+            });
+        }
+    </script>
+</body>
+</html>
